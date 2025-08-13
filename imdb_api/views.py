@@ -27,12 +27,9 @@ def movie_detail (request, pk):
 
 
 
-
-
-
-
 @api_view(['GET', 'POST'])
-def stream_list(request):
+def stream_list(request, format=None):
+    print("stream_list view called with format =", format)
     if request.method == 'GET':
         Stream_List = StreamPlatform.objects.all()
         serializerd = StreamPlatformSerializer(Stream_List, many = True)
@@ -50,20 +47,17 @@ def stream_list(request):
     
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def stream_detail (request, pk):
+def stream_detail(request, pk, format=None):
+    print("stream_detail view called with format =", format)
     try:
         Stream_Detail = StreamPlatform.objects.get(pk=pk)
-        
     except StreamPlatform.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    
-    
-    
     
     if request.method == 'GET':
         serializer = StreamPlatformSerializer(Stream_Detail)
         return Response(serializer.data)
-    
+
     
     
     
