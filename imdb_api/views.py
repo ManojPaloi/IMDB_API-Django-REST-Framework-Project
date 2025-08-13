@@ -43,7 +43,7 @@ def stream_list(request):
         if serializerd.is_valid():
             serializerd.save()
             return Response(serializerd.data, status=status.HTTP_201_CREATED)
-        return Response(serializerd.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializerd.errors, status=status.HTTP_400_BAD_REQUEST) 
 
     
     
