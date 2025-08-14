@@ -50,11 +50,11 @@ def stream_list(request, format=None):
     print("stream_list view called with format =", format)
     if request.method == 'GET':
         Stream_List = StreamPlatform.objects.all()
-        serializerd = StreamPlatformSerializer(Stream_List, many = True)
+        serializerd = StreamPlatformSerializer(Stream_List, many = True, context={'request': request})
         return Response(serializerd.data )
     
     elif request.method == 'POST':
-        serializerd = StreamPlatformSerializer(data=request.data)
+        serializerd = StreamPlatformSerializer(data=request.data, context={'request': request})
         if serializerd.is_valid():
             serializerd.save()
             return Response(serializerd.data, status=status.HTTP_201_CREATED)
@@ -73,7 +73,7 @@ def stream_detail(request, pk, format=None):
         return Response(status=status.HTTP_404_NOT_FOUND)
     
     if request.method == 'GET':
-        serializer = StreamPlatformSerializer(Stream_Detail)
+        serializer = StreamPlatformSerializer(Stream_Detail, context={'request': request})
         return Response(serializer.data)
 
     
@@ -82,7 +82,7 @@ def stream_detail(request, pk, format=None):
     
     
     elif request.method == 'PUT':
-        serializer = StreamPlatformSerializer(Stream_Detail, data=request.data)
+        serializer = StreamPlatformSerializer(Stream_Detail, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
