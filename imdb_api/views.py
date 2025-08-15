@@ -26,7 +26,7 @@ def api_root(request, format=None):
 # Create your views here.
 def movie_list(request):
     Movie_List = WatchList.objects.all()
-    serializerd = WatchListSerializer(Movie_List, many = True)
+    serializerd = WatchListSerializer(Movie_List, many = True, context={'request': request})
 
     return JsonResponse(serializerd.data, safe=False )
 
@@ -34,7 +34,7 @@ def movie_list(request):
 def movie_detail (request, pk):
     
     Movie_Details = WatchList.objects.get(pk=pk)
-    serializerd = WatchListSerializer(Movie_Details)
+    serializerd = WatchListSerializer(Movie_Details, context={'request': request})
 
     return JsonResponse(serializerd.data)
 

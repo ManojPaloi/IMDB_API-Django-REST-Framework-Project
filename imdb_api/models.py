@@ -24,7 +24,7 @@ class WatchList(models.Model):
     
     storyline = models.CharField(max_length=100)
     
-    platform = models.ForeignKey(StreamPlatform, on_delete = models.CASCADE)
+    platform = models.ForeignKey(StreamPlatform, on_delete = models.CASCADE, related_name='watchList')
     
     active = models.BooleanField(default=True)
     
