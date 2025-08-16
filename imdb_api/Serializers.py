@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import WatchList, StreamPlatform
+from .models import WatchList, StreamPlatform, Review
 
 
 class WatchListSerializer(serializers.HyperlinkedModelSerializer):
@@ -32,3 +32,12 @@ class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
         model = StreamPlatform
         fields = '__all__'
  
+ 
+ 
+ 
+ 
+class ReviewSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
+        

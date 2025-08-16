@@ -1,13 +1,11 @@
 from django.http import JsonResponse
-from .models import WatchList, StreamPlatform
-from .Serializers import WatchListSerializer, StreamPlatformSerializer
+from .models import WatchList, StreamPlatform, Review
+from .Serializers import WatchListSerializer, StreamPlatformSerializer, ReviewSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.reverse import reverse
-
-
-
+from rest_framework import generics
 
 
 
@@ -92,6 +90,26 @@ def stream_detail(request, pk, format=None):
         Stream_Detail.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
         
+        
+        
+        
+        
+        
+class ReviewListView(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    
+  
+
+
+
+
+class ReviewDetailView (generics.RetrieveUpdateDestroyAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    
+   
+    
 
 
 
