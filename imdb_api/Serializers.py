@@ -36,8 +36,10 @@ class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
  
  
  
-class ReviewSerializer(serializers.HyperlinkedModelSerializer):
+class ReviewSerializer(serializers.ModelSerializer):
+    movie = serializers.StringRelatedField()
+    reviewer = serializers.StringRelatedField()
+
     class Meta:
         model = Review
         fields = '__all__'
-        
