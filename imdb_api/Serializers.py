@@ -7,6 +7,23 @@ class WatchListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = WatchList
         fields = '__all__'
+        
+        
+        
+    def validate_name (self, value):
+        
+        if  len(value)<=2:
+            raise serializers.ValidationError("Blog post is not about Django")
+        return value
+        
+        
+        
+    def validate(self, data):
+         
+        if data['name'] == data['about']:
+            raise serializers.ValidationError("filed both is same name and about")
+        return data
+        
 
 class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField ( view_name = 'streamplatform-detail')
@@ -14,3 +31,4 @@ class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = StreamPlatform
         fields = '__all__'
+ 
