@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import StreamPlatform, WatchList
+from .models import StreamPlatform, WatchList, Review
 
 # Register your models here
 @admin.register(StreamPlatform)
@@ -12,3 +12,8 @@ class WatchListAdmin(admin.ModelAdmin):
     list_display = ('title', 'platform', 'active', 'created')
     list_filter = ('active', 'platform')
     search_fields = ('title', 'storyline')
+    
+    
+    
+    
+admin.site.register(Review)
