@@ -11,6 +11,6 @@ urlpatterns = [
     path('reviews/', views.ReviewListView.as_view(), name='reviews-list'),
     path('reviews/<int:pk>/', views.ReviewDetailView.as_view(), name='reviews-detail'),
 
-]
+] 
 
 urlpatterns = format_suffix_patterns(urlpatterns)
