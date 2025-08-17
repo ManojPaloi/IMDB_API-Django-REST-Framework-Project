@@ -17,4 +17,3 @@ class WatchListAdmin(admin.ModelAdmin):
     
     
 admin.site.register(Review) 
-vb vbnv

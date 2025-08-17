@@ -45,5 +45,4 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
         
-         
         
