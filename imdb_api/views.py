@@ -105,7 +105,7 @@ class ReviewListView(generics.ListCreateAPIView):
 
 
 class ReviewDetailView (generics.RetrieveUpdateDestroyAPIView):
-    queryset = Review.objects.all()
+    queryset = Review.objects.all() 
     serializer_class = ReviewSerializer
     
    
