@@ -16,4 +16,4 @@ class WatchListAdmin(admin.ModelAdmin):
     
     
     
-admin.site.register(Review)
+admin.site.register(Review) 
