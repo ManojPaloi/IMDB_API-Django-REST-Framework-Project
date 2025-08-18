@@ -95,16 +95,19 @@ def stream_detail(request, pk, format=None):
         
         
         
-class ReviewListView(generics.ListCreateAPIView):
-    queryset = Review.objects.all()
+class ReviewListView(generics.ListAPIView):
     serializer_class = ReviewSerializer
-    
-  
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Review.objects.filter(watchList=pk)  # ✅ correct
 
 
 
 
-class ReviewDetailView (generics.RetrieveUpdateDestroyAPIView):
+
+
+class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all() 
     serializer_class = ReviewSerializer
      

@@ -7,7 +7,7 @@ urlpatterns = [
     path('list/', views.movie_list, name="movie-list"),
     path('list/<int:pk>/', views.movie_detail, name='movie-detail'),
     path('stream/', views.stream_list, name="stream-platform"),
-    path('stream/<int:pk>/reviews/', views.ReviewListView.as_view(), name="streamplatform-detail"),
+    path('list/<int:pk>/review/', views.ReviewListView.as_view(), name="streamplatform-detail"),
 ] 
 
 urlpatterns = format_suffix_patterns(urlpatterns)
