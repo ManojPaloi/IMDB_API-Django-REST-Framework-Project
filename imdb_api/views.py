@@ -106,6 +106,21 @@ class ReviewListView(generics.ListAPIView):
 
 
 
+class ReviewCreateView(generics.CreateAPIView):
+    serializer_class = ReviewSerializer
+    
+    def perform_create(self, serializer):
+        pk = self.kwargs['pk']
+        movie = WatchList.objects.get(pk=pk)
+        serializer.save(WatchList = movie)
+
+    
+
+
+
+
+
+
 
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all() 
