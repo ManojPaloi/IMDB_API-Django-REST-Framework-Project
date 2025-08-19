@@ -117,11 +117,6 @@ class ReviewCreateView(generics.CreateAPIView):
     
 
 
-
-
-
-
-
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all() 
     serializer_class = ReviewSerializer
