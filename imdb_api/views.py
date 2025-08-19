@@ -100,7 +100,7 @@ class ReviewListView(generics.ListAPIView):
 
     def get_queryset(self):
         pk = self.kwargs['pk']
-        return Review.objects.filter(watchList=pk)  # ✅ correct
+        return Review.objects.filter(watchList=pk) 
 
 
 
