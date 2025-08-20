@@ -9,6 +9,7 @@ urlpatterns = [
     path('stream/', views.stream_list, name="stream-platform"),
     path('list/<int:pk>/review/', views.ReviewListView.as_view(), name="review-list"),
     path('list/<int:pk>/review-create/', views.ReviewCreateView.as_view(), name="review-create"),
+    path('list/review/<int:pk>/', views.ReviewDetailView.as_view(), name='review-detail'),
 ] 
 
 urlpatterns = format_suffix_patterns(urlpatterns)
