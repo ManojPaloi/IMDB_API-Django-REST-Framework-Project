@@ -45,7 +45,7 @@ class Review(models.Model):
     
     desc = models.TextField(blank=True, null=True)  
     
-    watchList = models.ForeignKey(WatchList, on_delete=models.CASCADE, related_name='reviews')
+    watchList = models.ForeignKey(WatchList, related_name="reviews", on_delete=models.CASCADE)
     
     active = models.BooleanField(default=True)
     
