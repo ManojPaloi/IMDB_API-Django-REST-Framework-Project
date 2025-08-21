@@ -118,6 +118,15 @@ class ReviewCreateView(generics.CreateAPIView):
             raise serializers.ValidationError("You have already reviewed this movie.")
 
         serializer.save(watchList=movie, review_user=user)
+        
+        
+    def create(self, request, *args, **kwargs):
+        """Override to return full serialized data after creation"""
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 
