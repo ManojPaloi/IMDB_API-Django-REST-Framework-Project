@@ -7,7 +7,6 @@ urlpatterns = [
     path('list/', views.movie_list, name="movie-list"),
     path('list/<int:pk>/', views.movie_detail, name='movie-detail'),
 
-    # Add detail route for StreamPlatform
     path('stream/', views.stream_list, name="streamplatform-list"),
     path('stream/<int:pk>/', views.stream_detail, name="streamplatform-detail"),
 
