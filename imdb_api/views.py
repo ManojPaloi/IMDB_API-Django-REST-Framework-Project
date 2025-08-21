@@ -100,11 +100,7 @@ class ReviewListView(generics.ListAPIView):
 
     def get_queryset(self):
         pk = self.kwargs['pk']
-        return Review.objects.filter(watchList__pk=pk)
-
-
-
-
+        return Review.objects.filter(watchList__pk=pk, active=True)
 
 
 class ReviewCreateView(generics.CreateAPIView):
@@ -113,15 +109,13 @@ class ReviewCreateView(generics.CreateAPIView):
     def perform_create(self, serializer):
         pk = self.kwargs['pk']
         movie = WatchList.objects.get(pk=pk)
-        serializer.save(WatchList = movie)
-
-    
+        serializer.save(watchList=movie, review_user=self.request.user)
 
 
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Review.objects.all() 
+    queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-     
+
    
     
 
