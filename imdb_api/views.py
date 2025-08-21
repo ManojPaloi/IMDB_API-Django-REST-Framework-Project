@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework import generics
+from rest_framework import serializers  
 
 
 
@@ -105,11 +106,20 @@ class ReviewListView(generics.ListAPIView):
 
 class ReviewCreateView(generics.CreateAPIView):
     serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
     
     def perform_create(self, serializer):
         pk = self.kwargs['pk']
         movie = WatchList.objects.get(pk=pk)
-        serializer.save(watchList=movie, review_user=self.request.user)
+        user = self.request.user
+
+        # Check if this user already reviewed this movie
+        if Review.objects.filter(watchList=movie, review_user=user).exists():
+            raise serializers.ValidationError("You have already reviewed this movie.")
+
+        serializer.save(watchList=movie, review_user=user)
+
+
 
 
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
