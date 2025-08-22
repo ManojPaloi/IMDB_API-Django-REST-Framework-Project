@@ -39,7 +39,7 @@ class StreamPlatformSerializer(serializers.HyperlinkedModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     review_user = serializers.StringRelatedField(read_only=True)
     watchlist_id = serializers.IntegerField(source="watchList.id", read_only=True)
-    watchlist_name = serializers.CharField(source="watchList.title", read_only=True)
+    watchList = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Review
