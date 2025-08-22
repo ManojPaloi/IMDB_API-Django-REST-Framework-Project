@@ -2,20 +2,21 @@ from django.http import JsonResponse
 from .models import WatchList, StreamPlatform, Review
 from .Serializers import WatchListSerializer, StreamPlatformSerializer, ReviewSerializer
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework import generics
 from rest_framework import serializers  
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly 
 
 
 
 @api_view(['GET'])
+@permission_classes([IsAdminUser])
 def api_root(request, format=None):
     return Response({
         'movie-list': reverse('movie-list', request=request, format=format),
-        'stream-platform': reverse('streamplatform-list', request=request, format=format)
+        'streamplatform-list': reverse('streamplatform-list', request=request, format=format)
     })
 
 
@@ -24,13 +25,14 @@ def api_root(request, format=None):
 
 
 # Create your views here.
+@permission_classes([IsAdminUser])
 def movie_list(request):
     Movie_List = WatchList.objects.all()
     serializerd = WatchListSerializer(Movie_List, many = True, context={'request': request})
 
     return JsonResponse(serializerd.data, safe=False )
 
-
+@permission_classes([IsAdminUser])
 def movie_detail (request, pk):
     
     Movie_Details = WatchList.objects.get(pk=pk)
@@ -46,6 +48,7 @@ def movie_detail (request, pk):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAdminUser])
 def stream_list(request, format=None):
     print("stream_list view called with format =", format)
     if request.method == 'GET':
@@ -65,6 +68,7 @@ def stream_list(request, format=None):
     
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticatedOrReadOnly ])
 def stream_detail(request, pk, format=None):
     print("stream_detail view called with format =", format)
     try:
@@ -98,7 +102,7 @@ def stream_detail(request, pk, format=None):
         
         
 class ReviewListView(generics.ListAPIView):
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticatedOrReadOnly ]
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
@@ -135,7 +139,7 @@ class ReviewCreateView(generics.CreateAPIView):
 
 
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticatedOrReadOnly ]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
