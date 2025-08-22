@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework import generics
 from rest_framework import serializers  
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
 
@@ -14,7 +15,7 @@ from rest_framework import serializers
 def api_root(request, format=None):
     return Response({
         'movie-list': reverse('movie-list', request=request, format=format),
-        'stream-platform': reverse('stream-platform', request=request, format=format)
+        'stream-platform': reverse('streamplatform-list', request=request, format=format)
     })
 
 
@@ -97,6 +98,7 @@ def stream_detail(request, pk, format=None):
         
         
 class ReviewListView(generics.ListAPIView):
+    permission_classes = [IsAdminUser]
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
@@ -105,6 +107,7 @@ class ReviewListView(generics.ListAPIView):
 
 
 class ReviewCreateView(generics.CreateAPIView):
+    permission_classes = [IsAdminUser]
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
     
@@ -132,6 +135,7 @@ class ReviewCreateView(generics.CreateAPIView):
 
 
 class ReviewDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAdminUser]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
