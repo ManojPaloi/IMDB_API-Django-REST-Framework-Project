@@ -102,7 +102,7 @@ def stream_detail(request, pk, format=None):
         
         
 class ReviewListView(generics.ListAPIView):
-    permission_classes = [IsAuthenticatedOrReadOnly ]
+    permission_classes = [IsAuthenticated ]
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
@@ -111,7 +111,7 @@ class ReviewListView(generics.ListAPIView):
 
 
 class ReviewCreateView(generics.CreateAPIView):
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
     
@@ -123,8 +123,17 @@ class ReviewCreateView(generics.CreateAPIView):
         # Check if this user already reviewed this movie
         if Review.objects.filter(watchList=movie, review_user=user).exists():
             raise serializers.ValidationError("You have already reviewed this movie.")
-
+        
+        if movie.Average_rating == 0:
+            movie.Average_rating = serializer.validated_data['rating']
+        else:
+            movie.Average_rating = (movie.Average_rating + serializer.validated_data['rating'])/2
+        movie.Number_Rating +=1
+        movie.save()
         serializer.save(watchList=movie, review_user=user)
+        
+        
+        
         
         
     def create(self, request, *args, **kwargs):
